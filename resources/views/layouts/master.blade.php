@@ -14,7 +14,7 @@
 
 <!-- <body style="background: rgb(196,222,243);font-family: 'Baloo 2', serif;"> -->
 <body style="background: #f7fdf3;font-family: 'Baloo 2', serif;">
-    <nav class="navbar navbar-light navbar-expand-md" style="background: rgb(196,222,243)">
+    <nav class="navbar navbar-light navbar-expand-md" style="text-transform: uppercase;background: rgb(196,222,243)">
         <div class="container"><a class="navbar-brand" href="#"><img class="img-fluid" src="{{ url('/img/azul-nomelateral.png') }}" loading="lazy" width="120px" /></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div id="navcol-1" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">

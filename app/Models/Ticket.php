@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\BaseModels;
 
-class Ticket extends Authenticatable
+class Ticket extends Authenticatable 
 {
     use HasApiTokens, HasFactory, Notifiable;
 

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->string('demanda');
-            $table->string('dataFechamento')->nullable()->default(NULL);
+            // $table->string('dataFechamento')->nullable()->default(NULL);
             $table->string('ramal');
             $table->string('status')->default('1');
             $table->foreignId('requerente_user_id')->constrained('users');

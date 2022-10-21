@@ -23,7 +23,32 @@
 
     <div class="row">
         <div class="col" style="margin-top: 10px;">
-            <p style="margin-bottom: 5px;margin-top: 5px;">Lista de usuários já cadastrados:</p>
+
+            <div class="d-flex align-items-center mt-3">
+                <p style="margin-top: 5px;">Filtrar por:&nbsp;&nbsp;</p>
+
+                <form action=" {{ route('user.index') }} " method="get">
+                    <div class="dropdown ">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                            &nbsp;&nbsp;
+                            @if($listar == 'all')
+                            Todos
+                            @elseif($listar == '1')
+                            Ativos
+                            @else
+                            Inativos
+                            @endif
+                            &nbsp;&nbsp;
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><button type="submit" value="all" name="filter" class="dropdown-item">Todos</button></li>
+                            <li><button type="submit" value="1" name="filter" class="dropdown-item">Ativos</button></li>
+                            <li><button type="submit" value="0" name="filter" class="dropdown-item">Inativos</button></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <!-- <p style="margin-bottom: 5px;margin-top: 5px;">Lista de usuários já cadastrados:</p> -->
 
             <!-- <form action=" {{ route('user.index') }} " method="get">
                 <div class="row ">
@@ -39,7 +64,7 @@
                 </div>
             </form> -->
 
-            <form action=" {{ route('user.index') }} " method="get">
+            <!-- <form action=" {{ route('user.index') }} " method="get">
                 <div class="mb-4 btn-group">
                     <button type="submit" value="all" name="filter" class="btn btn-primary">Todos</button>
 
@@ -49,7 +74,7 @@
 
 
                 </div>
-            </form>
+            </form> -->
             <div class="table-responsive">
 
                 <table id="tabela" class="table table-striped display">
@@ -69,7 +94,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($user as $user)
+                        @foreach ($users as $user)
 
                         <div class="modal fade" role="dialog" tabindex="-1" id="modal-delete-{{ $user->id }}">
                             <div class="modal-dialog modal-dialog-centered" role="document">

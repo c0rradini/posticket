@@ -37,14 +37,17 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->filter == "all") {
-            $user = User::all();
+            $listar = "all";
+            $users = User::all();
         } elseif ($request->filter == null) {
-            $user = User::where('status', '1')->get();
+            $listar = "1";
+            $users = User::where('status', '1')->get();
         } else {
-            $user = User::where('status', $request->filter)->get();
+            $listar = $request->filter;
+            $users = User::where('status', $request->filter)->get();
         }
 
-        return view('user.index', compact('user'));
+        return view('user.index', compact('users', 'listar'));
     }
 
     public function create()

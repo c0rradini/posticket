@@ -16,15 +16,19 @@ class SetorController extends Controller
 
     public function index(Request $request)
     {
+
         if ($request->filter == "all") {
+            $listar = "all";
             $setores = Setor::all();
         } elseif ($request->filter == null) {
+            $listar = "1";
             $setores = Setor::where('status', '1')->get();
         } else {
+            $listar = $request->filter;
             $setores = Setor::where('status', $request->filter)->get();
         }
 
-        return view('setor.index', compact('setores'));
+        return view('setor.index', compact('setores', 'listar'));
     }
 
     public function create()
@@ -61,7 +65,7 @@ class SetorController extends Controller
     {
 
         $setor = Setor::findOrFail($id);
-    
+
 
         $setor->update([
             'name' => $request->name,

@@ -23,16 +23,17 @@ class TicketController extends Controller
     public function index(Request $request)
     {
         if ($request->filter == "all") {
+            $listar = "all";
             $ticket = Ticket::all();
         } elseif ($request->filter == null) {
+            $listar = "1";
             $ticket = Ticket::where('status', '1')->get();
         } else {
+            $listar = $request->filter;
             $ticket = Ticket::where('status', $request->filter)->get();
         }
 
-
-
-        return view('ticket.index', compact('ticket'));
+        return view('ticket.index', compact('ticket', 'listar'));
     }
 
 
@@ -44,9 +45,9 @@ class TicketController extends Controller
         $setoresAtivos = Setor::where('status', '<>', '0')->get();
         $maquinasAtivas = Maquina::where('status', '<>', '0')->get();
 
-        
 
-        return view('ticket.create', compact('setoresAtivos', 'maquinasAtivas','tecnicos'));
+
+        return view('ticket.create', compact('setoresAtivos', 'maquinasAtivas', 'tecnicos'));
     }
 
     public function store(TicketRequest $request)
@@ -65,7 +66,7 @@ class TicketController extends Controller
         // GRAVAR LOG (verificar se for tecnico na hr de criar)
 
         Log::create([
-            'descricao'=> 'Iniciando um Ticket', 
+            'descricao' => 'Iniciando um Ticket',
             'status' => 1,
             'ticket_id' => $ticket->id,
             'user_id' => Auth::id(),
@@ -84,11 +85,10 @@ class TicketController extends Controller
     public function show($id)
     {
         $ticket = Ticket::findOrFail($id);
-        
-        $logs = $ticket->logs->sortDesc(); 
-        
-        return view('ticket.show', compact('ticket', 'logs'));
 
+        $logs = $ticket->logs->sortDesc();
+
+        return view('ticket.show', compact('ticket', 'logs'));
     }
 
     public function edit($id)
@@ -100,27 +100,28 @@ class TicketController extends Controller
         $ticket = Ticket::findOrFail($id);
         // return view('ticket.edit', ['ticket' => $ticket]);
 
-        $logs = $ticket->logs->sortDesc(); 
+        $logs = $ticket->logs->sortDesc();
 
-        return view('ticket.edit', compact('setoresAtivos', 'maquinasAtivas','tecnicos', 'ticket', 'logs'));
+        return view('ticket.edit', compact('setoresAtivos', 'maquinasAtivas', 'tecnicos', 'ticket', 'logs'));
     }
 
     public function update(Request $request, $id)
     {
 
         $ticket = Ticket::findOrFail($id);
+        
 
         $ticket->update($request->all());
 
         //LOG
 
         Log::create([
-            'descricao'=> $request->obsLog, 
+            'descricao' => $request->obsLog,
             'status' => $request->status,
-            'ticket_id' => $ticket->id,
+            'ticket_id' => $id,
             'user_id' => Auth::id(),
         ]);
-
+        
         return redirect()->route('ticket.visualizar', ['id' => $id])->with('mensagem', 'Sucesso ao Editar!');
 
         // return view('ticket.edit', ['ticket' => $ticket]);
@@ -161,7 +162,7 @@ class TicketController extends Controller
         ]);
 
         Log::create([
-            'descricao'=> 'Assumiu o Ticket', 
+            'descricao' => 'Assumiu o Ticket',
             'status' => '1',
             'ticket_id' => $request->id,
             'user_id' => Auth::id(),
@@ -182,19 +183,19 @@ class TicketController extends Controller
             'status' => '4',
         ]);
 
-        // Log::create([
-        //     'descricao'=> $request->obsLog, 
-        //     'status' => $request->status,
-        //     'ticket_id' => $request->id,
-        //     'user_id' => Auth::id(),
-        // ]);
-
         Log::create([
-            'descricao'=> 'Encerrou o Ticket', 
-            'status' => 4,
+            'descricao' => $request->obsLog,
+            'status' => '4',
             'ticket_id' => $id,
             'user_id' => Auth::id(),
         ]);
+
+        // Log::create([
+        //     'descricao'=> 'Encerrou o Ticket', 
+        //     'status' => '4',
+        //     'ticket_id' => $id,
+        //     'user_id' => Auth::id(),
+        // ]);
         return redirect()->route('ticket.index')->with('mensagem', 'Ticket Encerrado com sucesso!');
     }
 }

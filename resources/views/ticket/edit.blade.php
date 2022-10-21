@@ -4,7 +4,6 @@
 
 @section('page')
 
-
 <div class="container" style="margin-top: 15px;margin-bottom: 10px;">
     <div class="row mt-4 mb-2" width="100%">
         <p style="font-size: 32px;font-weight: bold;">#{{ old('id', $ticket->id) }} - {{ old('titulo', $ticket->titulo)}} </p>
@@ -32,7 +31,7 @@
                     <div class="col d-flex align-items-center mb-4">
                         <p style="margin-bottom:0px;font-weight: bold;">Setor:&nbsp;</p>
 
-                        <select name="setor_id" class="form-control bg-light border rounded shadow-sm p-2" style="margin-bottom:0px" required="ON">
+                        <select name="setor_id" class="form-control bg-light border rounded shadow-sm p-2" style="margin-bottom:0px" required>
                             <option value="{{old('setor_id', $ticket->setor_id)}}">{{ $ticket->setor->name }}</option>
 
                             @foreach($setoresAtivos as $setor)
@@ -116,10 +115,6 @@
                     </select>
                 </div>
 
-                <div class="col d-flex align-items-center mb-4">
-                    <p style="margin-bottom:0px;font-weight: bold;">Observações&nbsp;no&nbsp;Log:&nbsp;</p>
-                    <input class="form-control bg-light border rounded shadow-sm p-2" style="margin-bottom:0px" name="obsLog" value="{{ old('obsLog') }}"></input>
-                </div>
             </div>
         </div>
 
@@ -148,13 +143,13 @@
                                     <td>{{ $log->usuario->name }}</td>
                                     <td>{{ $log->created_at }}</td>
                                     <td>{{ $log->descricao }}</td>
-                                    <td> @if( $ticket->status == '1')
+                                    <td> @if( $log->status == '1')
                                         Aberto
-                                        @elseif ($ticket->status == '2')
+                                        @elseif ($log->status == '2')
                                         Em Atendimento
-                                        @elseif ($ticket->status == '3')
+                                        @elseif ($log->status == '3')
                                         Aguardando Terceiros
-                                        @elseif ($ticket->status == '4')
+                                        @elseif ($log->status == '4')
                                         Encerrado
                                         @endif</td>
 
@@ -166,23 +161,150 @@
                 </div>
             </div>
         </div>
+
+
+
+
         <div class="container">
             <div class="col-md-6">
 
-                @if(Auth::check() && Auth::user()->tecnico === 1 && $ticket->responsavel_user_id === null)
-                <a class="btn btn-success m-1" role="button" href="{{ route('ticket.assumir-ticket', ['id'=>$ticket->id]) }}" style="color: black;">Assumir</a>
-                @endif
-
                 @if(Auth::check() && Auth::user()->tecnico === 1 || Auth::check() && Auth::id() === $ticket->requerente_user_id)
-                <button class="btn btn-success m-1" type="submit">Salvar</button>
+                <!-- <button class="btn btn-success m-1" type="submit">Salvar</button> -->
+                <a class="btn btn-primary m-1" role="button" data-bs-target="#modal-edit-{{ $ticket->id }}" data-bs-toggle="modal">Salvar</a>
 
-                <a class="btn btn-danger m-1" role="button" href="{{ route('ticket.encerrar-ticket', ['id'=>$ticket->id]) }}" style="color: black;">Encerrar</a>
+                @if ($ticket->status != '4')
+
+                @if(Auth::check() && Auth::user()->tecnico === 1 && $ticket->responsavel_user_id === null)
+                <a class="btn btn-success m-1" role="button" href="{{ route('ticket.assumir-ticket', ['id'=>$ticket->id]) }}">Assumir</a>
                 @endif
 
-                <a class="btn btn-dark m-1" role="button" href="{{ route('ticket.visualizar', ['id'=>$ticket->id]) }}" style="background: #b1b1b1;color: black;">Voltar</a>
+                <a class="btn btn-danger m-1" role="button" data-bs-target="#modal-delete-{{ $ticket->id }}" data-bs-toggle="modal">Encerrar</a>
+                @endif
+                @endif
+
+                <a class="btn btn-secondary m-1" role="button" href="{{ route('ticket.visualizar', ['id'=>$ticket->id]) }}">Voltar</a>
             </div>
         </div>
     </form>
 </div>
+<div class="modal fade" role="dialog" tabindex="-1" id="modal-delete-{{ $ticket->id }}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="margin-right: 31px;">Deseja realmente encerrar?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
 
+            <div class="modal-body text-start">
+                <span>ID: {{ $ticket->id }}</span></br>
+                <span>Nome: {{ $ticket->titulo }}</span>
+                </br></br>
+                <div class="col">
+                    <form action="{{ route('ticket.encerrar-ticket', ['id'=>$ticket->id]) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <p style="margin-bottom:0px;">Observações&nbsp;no&nbsp;Log:&nbsp;</p>
+                        <textarea class="form-control bg-light border rounded shadow-sm p-2 mb-4" style="width: 100%;min-height: 180px;height:80%;" name="obsLog" placeholder="Motivo de encerramento" require value="{{ old('obsLog') }}"></textarea>
+
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-secondary text-light" type="button" data-bs-dismiss="modal">Voltar</button>
+                <button class="btn btn-danger" type="submit">Encerrar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" tabindex="-1" id="modal-delete-{{ $ticket->id }}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="margin-right: 31px;">Colocar alguma observação? </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body text-start">
+                <span>ID: {{ $ticket->id }}</span></br>
+                <span>Nome: {{ $ticket->titulo }}</span>
+                </br></br>
+                <div class="col">
+                    <form action="{{ route('ticket.encerrar-ticket', ['id'=>$ticket->id]) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <p style="margin-bottom:0px;">Observações&nbsp;no&nbsp;Log:&nbsp;</p>
+                        <textarea class="form-control bg-light border rounded shadow-sm p-2 mb-4" style="width: 100%;min-height: 180px;height:80%;" name="obsLog" placeholder="Motivo de encerramento" require value="{{ old('obsLog') }}"></textarea>
+
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-secondary text-light" type="button" data-bs-dismiss="modal">Voltar</button>
+                <button class="btn btn-danger" type="submit">Encerrar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" tabindex="-1" id="modal-delete-{{ $ticket->id }}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="margin-right: 31px;">Colocar alguma observação? </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body text-start">
+                <span>ID: {{ $ticket->id }}</span></br>
+                <span>Nome: {{ $ticket->titulo }}</span>
+                </br></br>
+                <div class="col">
+                    <form action="{{ route('ticket.encerrar-ticket', ['id'=>$ticket->id]) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <p style="margin-bottom:0px;">Observações&nbsp;no&nbsp;Log:&nbsp;</p>
+                        <textarea class="form-control bg-light border rounded shadow-sm p-2 mb-4" style="width: 100%;min-height: 180px;height:80%;" name="obsLog" placeholder="Motivo de encerramento" require value="{{ old('obsLog') }}"></textarea>
+
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-secondary text-light" type="button" data-bs-dismiss="modal">Voltar</button>
+                <button class="btn btn-primary" type="submit">Salvar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" role="dialog" tabindex="-1" id="modal-edit-{{ $ticket->id }}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="margin-right: 31px;">Colocar alguma observação? </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body text-start">
+                <span>ID: {{ $ticket->id }}</span></br>
+                <span>Nome: {{ $ticket->titulo }}</span>
+                </br></br>
+                <div class="col">
+                    <form action="{{ route('atualiza.ticket', ['id'=>$ticket->id]) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <p style="margin-bottom:0px;">Observações&nbsp;no&nbsp;Log:&nbsp;</p>
+                        <textarea class="form-control bg-light border rounded shadow-sm p-2 mb-4" style="width: 100%;min-height: 180px;height:80%;" name="obsLog" placeholder="Insira as observações necessárias" require value="{{ old('obsLog') }}"></textarea>
+
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-secondary text-light" type="button" data-bs-dismiss="modal">Voltar</button>
+                <button class="btn btn-primary" type="submit">Salvar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection

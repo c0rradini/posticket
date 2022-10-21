@@ -23,17 +23,39 @@
 
     <div class="row">
         <div class="col" style="margin-top: 10px;">
-            <p class="mb-2" style="margin-top: 5px;">Lista de setores já cadastrados:</p>
 
-            <form action=" {{ route('setor.index') }} " method="get">
-                <div class="mb-3 btn-group">
+            <div class="d-flex align-items-center mt-3">
+                <p style="margin-top: 5px;">Filtrar por:&nbsp;&nbsp;</p>
+
+                <form action=" {{ route('setor.index') }} " method="get">
+                    <div class="dropdown ">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                            &nbsp;&nbsp;
+                            @if($listar == 'all')
+                            Todos
+                            @elseif($listar == '1')
+                            Ativos
+                            @else
+                            Inativos
+                            @endif
+                            &nbsp;&nbsp;
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><button type="submit" value="all" name="filter" class="dropdown-item">Todos</button></li>
+                            <li><button type="submit" value="1" name="filter" class="dropdown-item">Ativos</button></li>
+                            <li><button type="submit" value="0" name="filter" class="dropdown-item">Inativos</button></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="mb-3 btn-group">
                     <button type="submit" value="all" name="filter" class="btn btn-primary">Todos</button>
 
                     <button type="submit" value="1" name="filter" class="btn-primary btn">Ativos</button>
 
                     <button type="submit" value="0" name="filter" class="btn-primary btn">Inativos</button>
-                </div>
-            </form>
+                </div> -->
+
 
             <div class="table-responsive">
                 <table id="tabela" class="table table-striped display">
@@ -103,7 +125,7 @@
                             <td>{{$setor->id}}</td>
                             <td>{{$setor->name}}</td>
 
-                            <td>@if($setor->status === 1)
+                            <td>@if($setor->status == 1)
                                 Ativo
                                 @else
                                 Inativo
@@ -117,7 +139,7 @@
                                         Ações
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li> <a class="dropdown-item btn" role="button" href="{{ route('edit.setor', $setor->id )}} ">Editar</a></li>
+                                        <li> <a class="dropdown-item" role="button" href="{{ route('edit.setor', $setor->id )}} ">Editar</a></li>
 
                                         @if($setor->status == '1')
                                         <li><a class="dropdown-item" type="button" data-bs-target="#modal-delete-{{ $setor->id }}" data-bs-toggle="modal">Excluir</a></li>

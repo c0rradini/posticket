@@ -23,7 +23,33 @@
 
     <div class="row">
         <div class="col" style="margin-top: 10px;">
-            <p class="mb-2" style="margin-top: 5px;">Lista de maquinas já cadastrados:</p>
+            <div class="d-flex align-items-center mt-3">
+                <p style="margin-top: 5px;">Filtrar por:&nbsp;&nbsp;</p>
+
+                <form action=" {{ route('maquina.index') }} " method="get">
+                    <div class="dropdown ">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                            &nbsp;&nbsp;
+                            @if($listar == 'all')
+                            Todos
+                            @elseif($listar == '1')
+                            Ativos
+                            @else
+                            Inativos
+                            @endif
+
+
+                            &nbsp;&nbsp;
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><button type="submit" value="all" name="filter" class="dropdown-item">Todos</button></li>
+                            <li><button type="submit" value="1" name="filter" class="dropdown-item">Ativos</button></li>
+                            <li><button type="submit" value="0" name="filter" class="dropdown-item">Inativos</button></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <!-- <p class="mb-2" style="margin-top: 5px;">Lista de maquinas já cadastrados:</p>
 
             <form action=" {{ route('maquina.index') }} " method="get">
                 <div class="mb-3 btn-group">
@@ -33,7 +59,7 @@
 
                     <button type="submit" value="0" name="filterUser" class="btn-primary btn">Inativos</button>
                 </div>
-            </form>
+            </form> -->
 
             <div class="table-responsive">
                 <table id="tabela" class="table table-striped display">

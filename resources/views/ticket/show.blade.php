@@ -4,6 +4,8 @@
 
 @section('page')
 
+
+
 <div class="container" style="margin-top: 15px;margin-bottom: 10px;">
     <div class="row mt-4 mb-2" width="100%">
         <p style="font-size: 32px;font-weight: bold;">#{{ old('id', $ticket->id) }} - {{ old('titulo', $ticket->titulo)}} </p>
@@ -124,39 +126,68 @@
                             <td>{{ $log->created_at }}</td>
                             <td>{{ $log->descricao }}</td>
                             <td> @if( $log->status == '1')
-                            Aberto
-                            @elseif ($log->status == '2')
-                            Em Atendimento
-                            @elseif ($log->status == '3')
-                            Aguardando Terceiros
-                            @elseif ($log->status == '4')
-                            Encerrado
-                            @endif</td>
-
+                                Aberto
+                                @elseif ($log->status == '2')
+                                Em Atendimento
+                                @elseif ($log->status == '3')
+                                Aguardando Terceiros
+                                @elseif ($log->status == '4')
+                                Encerrado
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
-                       
+
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+<div class="modal fade" role="dialog" tabindex="-1" id="modal-delete-{{ $ticket->id }}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="margin-right: 31px;">Deseja realmente encerrar?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('ticket.encerrar-ticket', ['id'=>$ticket->id]) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body text-start">
+                    <span>ID: {{ $ticket->id }}</span></br>
+                    <span>Nome: {{ $ticket->titulo }}</span>
+                    </br></br>
+                    <div class="col">
+                        <p style="margin-bottom:0px;">Observações&nbsp;no&nbsp;Log:&nbsp;</p>
+                        <textarea class="form-control bg-light border rounded shadow-sm p-2 mb-4" style="width: 100%;min-height: 180px;height:80%;" name="obsLog" placeholder="Motivo de encerramento" require value="{{ old('obsLog') }}"></textarea>
+
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-secondary text-light" type="button" data-bs-dismiss="modal">Voltar</button>
+
+                    <button class="btn btn-danger" type="submit">Encerrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 <div class="container">
     <div class="col-md-6">
 
-        @if(Auth::check() && Auth::user()->tecnico == '1' && $ticket->responsavel_user_id === null)
-        <a class="btn btn-success m-1" role="button" href="{{ route('ticket.assumir-ticket', ['id'=>$ticket->id]) }}" style="color: black;">Assumir</a>
-        @endif
-
+        @if ($ticket->status != '4')
         @if(Auth::check() && Auth::user()->tecnico == '1' || Auth::user()->id === $ticket->requerente_user_id)
-        <a class="btn btn-warning m-1" role="button" href="{{ route('edit.ticket', ['id'=>$ticket->id]) }}" style="color: black;">Editar</a>
-
-        <a class="btn btn-danger m-1" role="button" href="{{ route('ticket.encerrar-ticket', ['id'=>$ticket->id]) }}" style="color: black;">Encerrar</a>
+        <a class="btn btn-warning m-1" role="button" href="{{ route('edit.ticket', ['id'=>$ticket->id]) }}" style="color:white;">Editar</a>
+        @if(Auth::check() && Auth::user()->tecnico == '1' && $ticket->responsavel_user_id === null)
+        <a class="btn btn-success m-1" role="button" href="{{ route('ticket.assumir-ticket', ['id'=>$ticket->id]) }}">Assumir</a>
+        @endif
+        <a class="btn btn-danger m-1" role="button" data-bs-target="#modal-delete-{{ $ticket->id }}" data-bs-toggle="modal">Encerrar</a>
+        <!-- <a class="btn btn-danger m-1" role="button" href="{{ route('ticket.encerrar-ticket', ['id'=>$ticket->id]) }}">Encerrar</a> -->
+        @endif
         @endif
 
-        <a class="btn btn-dark m-1" role="button" href="{{ route('ticket.index') }}" style=" background: #b1b1b1;color: black;">Voltar</a>
-
+        <a class="btn btn-secondary m-1" role="button" href="{{ route('ticket.index') }}">Voltar</a>
 
     </div>
 </div>

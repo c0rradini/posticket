@@ -17,14 +17,17 @@ class MaquinaController extends Controller
     public function index(Request $request)
     {
         if ($request->filter == "all") {
+            $listar = "all";
             $maquinas = Maquina::all();
         } elseif ($request->filter == null) {
+            $listar = "1";
             $maquinas = Maquina::where('status', '1')->get();
         } else {
+            $listar = $request->filter;
             $maquinas = Maquina::where('status', $request->filter)->get();
         }
 
-        return view('maquina.index', compact('maquinas'));
+        return view('maquina.index', compact('maquinas', 'listar'));
     }
 
     public function create()
