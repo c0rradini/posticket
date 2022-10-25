@@ -144,9 +144,9 @@
                             <td>{{$ticket->created_at}}</td>
                             <td class="text-end">
                                 <div class="dropdown">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                                        Ações
-                                    </button>
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                            Ações
+                                        </button>
                                     <ul class="dropdown-menu">
 
                                         @if(Auth::check() && Auth::user()->tecnico === 1 && $ticket->responsavel_user_id === null && $ticket->status != '4')

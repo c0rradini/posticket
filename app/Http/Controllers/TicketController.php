@@ -37,15 +37,12 @@ class TicketController extends Controller
     }
 
 
-
     public function create()
     {
 
         $tecnicos = User::where('tecnico', '<>', '0')->where('status', '1')->get();
         $setoresAtivos = Setor::where('status', '<>', '0')->get();
         $maquinasAtivas = Maquina::where('status', '<>', '0')->get();
-
-
 
         return view('ticket.create', compact('setoresAtivos', 'maquinasAtivas', 'tecnicos'));
     }
@@ -66,7 +63,7 @@ class TicketController extends Controller
         // GRAVAR LOG (verificar se for tecnico na hr de criar)
 
         Log::create([
-            'descricao' => 'Iniciando um Ticket',
+            'descricao' => 'Iniciou o Ticket',
             'status' => 1,
             'ticket_id' => $ticket->id,
             'user_id' => Auth::id(),
@@ -109,7 +106,6 @@ class TicketController extends Controller
     {
 
         $ticket = Ticket::findOrFail($id);
-        
 
         $ticket->update($request->all());
 

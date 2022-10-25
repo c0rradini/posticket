@@ -8,15 +8,15 @@ use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class SetorController extends Controller
 {
 
 
     public function index(Request $request)
-    {
-
+    { 
+        
         if ($request->filter == "all") {
             $listar = "all";
             $setores = Setor::all();
@@ -105,11 +105,11 @@ class SetorController extends Controller
     public function disable(Setor $setor, $id)
     {
 
-        $setorPossuiTicketAtivo = Ticket::where('maquina_id', $id)->exists();
+        // $setorPossuiTicketAtivo = Ticket::where('maquina_id', $id)->exists();
 
-        if ($setorPossuiTicketAtivo) {
-            return redirect()->back()->with('error', 'Esse setor não pode ser desativado, pois existem tickets vinculados nesse setor.');
-        }
+        // if ($setorPossuiTicketAtivo) {
+        //     return redirect()->back()->with('error', 'Esse setor não pode ser desativado, pois existem tickets vinculados nesse setor.');
+        // }
 
         $setorPossuiUsuarios = User::where('setores_id', $id)->exists();
 

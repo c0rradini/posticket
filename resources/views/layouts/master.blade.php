@@ -13,8 +13,9 @@
 </head>
 
 <!-- <body style="background: rgb(196,222,243);font-family: 'Baloo 2', serif;"> -->
+
 <body style="background: #f7fdf3;font-family: 'Baloo 2', serif;">
-    <nav class="navbar navbar-light navbar-expand-md" style="text-transform: uppercase;background: rgb(196,222,243)">
+    <nav class="navbar navbar-light navbar-expand-md" style="background: rgb(196,222,243)">
         <div class="container"><a class="navbar-brand" href="#"><img class="img-fluid" src="{{ url('/img/azul-nomelateral.png') }}" loading="lazy" width="120px" /></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div id="navcol-1" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
@@ -35,7 +36,19 @@
                             </div>
                     </li>
 
-                    <li class="nav-item" style="margin-left:8px; margin-right: 8px;"><a class="nav-link" href="{{ route('login.logout') }}">Sair</a></li>
+                    @if (Auth::user()->tecnico == '1')
+                    <li class="nav-item" style="margin-left:8px; margin-right: 8px;"><a class="nav-link" href="{{ route('relatorio.index') }}">Relatórios</a></li>
+                    @endif
+
+
+
+                    <li class="nav-item d-flex justify-content-start align-items-center" style="margin-left:8px; margin-right: 8px;">
+                        <div class="nav-item dropdown" style="text-decoration: none;">
+                            <a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="color: rgba(0,0,0,0.55);text-decoration: none;">{{ Auth::user()->name }} </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('login.logout') }}">Sair</a>
+                            </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -44,7 +57,7 @@
     @yield('page')
 
     <!-- <footer class="text-center py-4 mt-4" style="background: #f8f9fa;position: relative;bottom: 0;width: 100%;"> -->
-    <footer class="text-center py-4 mt-4 footer" style="bottom: 0;background: rgb(196,222,243);;width: 100%;">
+    <footer class="text-center py-4 mt-4 footer" style="bottom: 0;position: relative;background: rgb(196,222,243);width: 100%;">
         <div class="container">
             <div class="row row-cols-1 row-cols-lg-3">
                 <div class="col d-xl-flex justify-content-xl-center align-items-xl-center">
@@ -98,7 +111,7 @@
         }, true);
     </script>
 
-    
+
     @stack('scripts')
 
 </body>

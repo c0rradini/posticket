@@ -38,7 +38,7 @@
                     <div class="mb-3"><input class="form-control" type="email" name="email" placeholder="Email"></div>
                     <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Senha"></div>
                     <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: #097ec1;border-style: none;">Login</button></div>
-                    <span class="text-muted">Esqueceu sua senha?</span>
+                    <!-- <span class="text-muted">Esqueceu sua senha?</span> -->
                 </form>
             </div>
         </div>

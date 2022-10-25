@@ -102,11 +102,11 @@ class MaquinaController extends Controller
     public function disable(Maquina $maquina, $id)
     {
 
-        $maquinaPossuiTicket = Ticket::where('maquina_id', $id)->exists();
+        // $maquinaPossuiTicket = Ticket::where('maquina_id', $id)->exists();
 
-        if ($maquinaPossuiTicket) {
-            return redirect()->back()->with('error', 'Esse maquina não pode ser desativado, pois existem tickets vinculados nesse maquina.');
-        }
+        // if ($maquinaPossuiTicket) {
+        //     return redirect()->back()->with('error', 'Esse maquina não pode ser desativado, pois existem tickets vinculados nesse maquina.');
+        // }
 
         $maquina = Maquina::findOrFail($id);
         $maquina->status = '0';

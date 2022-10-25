@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use CarbonCarbon;
 use Illuminate\Auth\EloquentUserProvider;
 
+
 class BaseModel extends EloquentUserProvider {
 
     public function getCreatedAtAttribute($attr) {        

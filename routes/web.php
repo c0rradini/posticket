@@ -4,6 +4,7 @@ use App\Http\Controllers\MaquinaController;
 use App\Http\Controllers\SetorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\TicketController;
 use GuzzleHttp\Middleware;
 use Illuminate\Routing\RouteGroup;
@@ -47,7 +48,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/maquina/cadastrar', [MaquinaController::class, 'create'])->name('cadastrar.maquina')->middleware('isTec');
     Route::post('/maquina/cadastrar', [MaquinaController::class, 'store'])->name('register_maquina')->middleware('isTec');
-    Route::get('/maquina/show/{id}', [MaquinaController::   class, 'show'])->middleware('isTec');
+    Route::get('/maquina/show/{id}', [MaquinaController::class, 'show'])->middleware('isTec');
     Route::get('/maquinas', [MaquinaController::class, 'index'])->name('maquina.index');
     Route::get('/maquina/editar/{id}', [MaquinaController::class, 'edit'])->name('edit.maquina')->middleware('isTec');
     Route::put('/maquina/update/{id}', [MaquinaController::class, 'update'])->name('atualiza.maquina')->middleware('isTec');
@@ -60,7 +61,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/ticket/cadastrar', [TicketController::class, 'create'])->name('cadastrar.ticket');
     Route::post('/ticket/cadastrar', [TicketController::class, 'store'])->name('register_ticket');
-    Route::get('/ticket/show/{id}', [TicketController::   class, 'show']);
+    Route::get('/ticket/show/{id}', [TicketController::class, 'show']);
     Route::get('/tickets', [TicketController::class, 'index'])->name('ticket.index');
     Route::get('/ticket/editar/{id}', [TicketController::class, 'edit'])->name('edit.ticket');
     Route::get('/ticket/visualizar/{id}', [TicketController::class, 'show'])->name('ticket.visualizar-user');
@@ -68,10 +69,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/ticket/update/{id}', [TicketController::class, 'update'])->name('atualiza.ticket');
     Route::get('/ticket/delete/{id}', [TicketController::class, 'delete']);
     Route::delete('/ticket/delete/{id}', [TicketController::class, 'destroy'])->name('destroy.ticket');
-    Route:: get('/ticket/assumir/{id}', [TicketController::class, 'assumirTicket'])->name('ticket.assumir-ticket');
-    Route:: put('/ticket/encerrar/{id}', [TicketController::class, 'encerrarTicket'])->name('ticket.encerrar-ticket');
-    
+    Route::get('/ticket/assumir/{id}', [TicketController::class, 'assumirTicket'])->name('ticket.assumir-ticket');
+    Route::put('/ticket/encerrar/{id}', [TicketController::class, 'encerrarTicket'])->name('ticket.encerrar-ticket');
 
 
-    
+    Route::get('/relatorios', [PDFController::class, 'index'])->name('relatorio.index');
+    Route::get('gerarPDF', [PDFController::class, 'gerarPDF'])->name('gerarPDF');
 });
