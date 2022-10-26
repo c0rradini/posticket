@@ -36,8 +36,17 @@
                             </div>
                     </li>
 
-                    @if (Auth::user()->tecnico == '1')
-                    <li class="nav-item" style="margin-left:8px; margin-right: 8px;"><a class="nav-link" href="{{ route('relatorio.index') }}">Relatórios</a></li>
+                    @if (Auth::user()->tecnico == '1')                    
+                    <li class="nav-item d-flex justify-content-start align-items-center" style="margin-left:8px; margin-right: 8px;">
+                        <div class="nav-item dropdown" style="text-decoration: none;">
+                            <a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="color: rgba(0,0,0,0.55);text-decoration: none;">Relatórios </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('report.maquina') }}">Máquinas</a>
+                                <a class="dropdown-item" href="{{ route('report.setor') }}">Setores</a>
+                                <a class="dropdown-item" href="{{ route('report.user') }}">Usuários</a>
+                                <a class="dropdown-item" href="{{ route('report.ticket') }}">Tickets</a>
+                            </div>
+                    </li>
                     @endif
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MaquinaRequest;
 use App\Models\Maquina;
 use App\Models\Ticket;
+use PDF;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
@@ -124,5 +125,41 @@ class MaquinaController extends Controller
         $maquina->update();
 
         return redirect()->back()->with('mensagem', 'Sucesso ao Ativar!');
+    }
+
+    public function report(Request $request)
+    {
+
+        $listar = "all";
+
+        return view('maquina.report', compact('listar'));
+    }
+
+    public function gerarPDF(Request $request)
+    {
+        // $maquinas = Maquina::get();
+
+        $relatorio = null;
+
+        if ($request->filter == "all") {
+            $listar = "all";
+            $maquinas = Maquina::all();
+        } elseif ($request->filter == null) {
+            $listar = "1";
+            $maquinas = Maquina::where('status', '1')->get();
+        } else {
+            $listar = $request->filter;
+            $maquinas = Maquina::where('status', $request->filter)->get();
+        }
+
+        $data = [
+            'title' => 'Relatório de Mássssssquinas',
+            'date' => date('d/m/Y H:i'),
+            'maquinas' => $maquinas,
+        ];
+
+        $pdf = PDF::loadView('maquina/PDF', $data);
+
+        return $pdf->download('reportMaquinas.pdf', compact('maquinas', 'listar'));
     }
 }

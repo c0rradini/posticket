@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use PDF;
 
 class UserController extends Controller
 {
@@ -33,7 +34,7 @@ class UserController extends Controller
         }
     }
 
-  
+
     public function index(Request $request)
     {
         if ($request->filter == "all") {
@@ -98,9 +99,8 @@ class UserController extends Controller
             'tecnico' => $request->tecnico,
         ]);
 
-        
-        return redirect()->route('user.index')->with('mensagem', 'Sucesso ao Editar!');
 
+        return redirect()->route('user.index')->with('mensagem', 'Sucesso ao Editar!');
     }
 
     public function delete($id)
@@ -171,5 +171,72 @@ class UserController extends Controller
         $user->update();
 
         return redirect()->back()->with('mensagem', 'Sucesso ao Ativar!');
+    }
+
+    public function report(Request $request)
+    {
+
+        $status = "all";
+        $tecnico = "all";
+        $setores = "all";
+
+        return view('user.report', compact('status', 'tecnico', 'setores'));
+    }
+
+    public function gerarPDF(Request $request)
+    { 
+        // if ($request->status == "*" && $request->tecnico == "*" && $request->setores == "*")
+        //  {
+        
+        //     $users = User::all();
+
+        // } else {
+
+            $users = User::select('*')->status($request->status)->tecnico($request->tecnico)->setores($request->setores)->get();
+
+            
+        // $users = User::where('status', $request->status)->where('tecnico', $request->tecnico)->where('setores_id', $request->setores)->get();
+
+        // }
+
+        // if ($request->status == "all" && $request->tecnico == "all" && $request->setores == "all") {
+
+        //     $users = User::all();
+
+        // } elseif ($request->status != "all" && $request->tecnico == "all" && $request->setores == "all") {
+
+        //     $users = User::where('status', $request->status)->get();
+
+        // } elseif ($request->status != "all" && $request->tecnico != "all" && $request->setores == "all") {
+
+        //     $users = User::where('status', $request->status)->where('tecnico', $request->tecnico)->get();
+            
+        // } else {
+
+        //     $users = User::where('status', $request->status, 'tecnico', $request->tecnico, 'setores', $request->setores)->get();
+        // } 
+
+
+        // if ($request->status == "all") {
+        //     $listar = "all";
+        //     $users = User::all();
+        // } elseif ($request->status == null) {
+        //     $listar = "1";
+        //     $users = User::where('status', '1')->get();
+        // } else {
+        //     $listar = $request->status;
+        //     $users = User::where('status', $request->status)->get();
+        // }
+
+
+        $data = [
+            'title' => 'Relatório de Usuário',
+            'date' => date('H:i d/m/Y'),
+            'users' => $users,
+        ];
+
+        $pdf = PDF::loadView('user/PDF', $data)->setPaper('A4', 'landscape');;
+
+        return $pdf->download('reportUsuarios.pdf', compact('users'));
     }
 }

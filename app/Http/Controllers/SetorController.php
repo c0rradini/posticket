@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
+use PDF;
 use Illuminate\Support\Facades\Auth;
 
 class SetorController extends Controller
@@ -15,8 +16,8 @@ class SetorController extends Controller
 
 
     public function index(Request $request)
-    { 
-        
+    {
+
         if ($request->filter == "all") {
             $listar = "all";
             $setores = Setor::all();
@@ -135,4 +136,39 @@ class SetorController extends Controller
 
         return redirect()->back()->with('mensagem', 'Sucesso ao Ativar!');
     }
+
+    public function report(Request $request)
+    {
+
+        $listar = "all";
+
+        return view('setor.report', compact('listar'));
+    }
+
+    public function gerarPDF(Request $request)
+    {
+        // $maquinas = Maquina::get();
+
+        if ($request->filter == "all") {
+            $listar = "all";
+            $setores = Setor::all();
+        } elseif ($request->filter == null) {
+            $listar = "1";
+            $setores = Setor::where('status', '1')->get();
+        } else {
+            $listar = $request->filter;
+            $setores = Setor::where('status', $request->filter)->get();
+        }
+
+        $data = [
+            'title' => 'Relatório de Setores',
+            'date' => date('d/m/Y H:i'),
+            'setores' => $setores,
+        ];
+
+        $pdf = PDF::loadView('setor/PDF', $data);
+
+        return $pdf->download('reportSetores.pdf', compact('setores', 'listar'));
+    }
+   
 }

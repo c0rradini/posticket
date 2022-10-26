@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ticket;
 use App\Models\User;
+use PDF;
 use Database\Seeders\SetorSeeder;
 
 class TicketController extends Controller
@@ -117,7 +118,7 @@ class TicketController extends Controller
             'ticket_id' => $id,
             'user_id' => Auth::id(),
         ]);
-        
+
         return redirect()->route('ticket.visualizar', ['id' => $id])->with('mensagem', 'Sucesso ao Editar!');
 
         // return view('ticket.edit', ['ticket' => $ticket]);
@@ -193,5 +194,33 @@ class TicketController extends Controller
         //     'user_id' => Auth::id(),
         // ]);
         return redirect()->route('ticket.index')->with('mensagem', 'Ticket Encerrado com sucesso!');
+    }
+
+    public function report(Request $request)
+    {
+
+        $status = "all";
+        $maquinas = "all";
+        $setores = "all";
+        $requerente = "all";
+        $responsaveis = "all";
+     
+        return view('ticket.report', compact('status', 'maquinas', 'setores', 'requerente', 'responsaveis'));
+    }
+
+    public function gerarPDF(Request $request)
+    {
+
+        $ticket = Ticket::select('*')->status($request->status)->maquinas($request->maquinas)->setores($request->setores)->requerente($request->requerente)->responsaveis($request->responsaveis)->get();
+
+        $data = [
+            'title' => 'Relatório de Tickets',
+            'date' => date('H:i d/m/Y'),
+            'tickets' => $ticket,
+        ];
+
+        $pdf = PDF::loadView('ticket/PDF', $data)->setPaper('A4', 'landscape');;
+
+        return $pdf->download('reportTickets.pdf', compact('ticket'));
     }
 }
