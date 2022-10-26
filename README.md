@@ -1,20 +1,12 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="/public/img/icon.png" width="400"></a></p>
+<p align="center"><a><img src="/public/img/icon.png" width="250"></a></p>
 
 
 
 ## Sobre Posticket
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+	O objetivo do sistema é auxiliar todos profissionais da empresa, seja ele da equipe de Tecnologia ou um funcionário de outro setor.
+	Sendo assim, o sistema fará uma ligação direta com quem precisa de ajuda e os responsáveis por ajudar, organizando o trabalho de todos e gerando um controle total dos problemas relacionados a tecnologia que ocorrem na empresa. O sistema de ticket será utilizado por todos setores e trará segurança e visibilidade principalmente para a equipe de técnicos.
+ 
 
 ## Learning Laravel
 
