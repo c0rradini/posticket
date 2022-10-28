@@ -18,8 +18,7 @@
         <div class="col-2 d-flex align-items-end" style="margin-bottom: 0px;">
             <h4 style="margin-bottom: 0px; height:100%; text-align:end;">Usuários</h4>
         </div>
-
-
+        
         <div class="col d-flex">
             <p class="d-flex align-items-center" style="margin-bottom:0px; margin-left:15px;">Status: </p>
             <form class="col d-flex" action="{{ route('gerarPDF.user'); }}" style="margin-bottom:0px;margin-top:0px;">

@@ -18,7 +18,7 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>ID</th>
+            <th>Código</th>
             <th>Name</th>
             <th>Status</th>
             <th>Criada em</th>

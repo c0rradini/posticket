@@ -9,7 +9,7 @@
 <body>
     <div>
 
-        <h2> Posticket</h2>
+        <h2>Posticket</h2>
         <h5>{{ $title }}</h5>
 
     </div>
@@ -18,10 +18,10 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>ID</th>
+            <th>Código</th>
             <th>Name</th>
             <th>Status</th>
-            <th>Criada em</th>
+            <th>Data de Criação</th>
         </tr>
 
         @foreach($maquinas as $maquina)

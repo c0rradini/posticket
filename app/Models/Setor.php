@@ -15,4 +15,9 @@ class Setor extends Model
         'name',
         'status',
     ];
+
+    public function scopeAtivo($query)
+    {
+        $query->where('status',  1);
+    }
 }

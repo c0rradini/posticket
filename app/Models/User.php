@@ -60,35 +60,40 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class, 'requerente_user_id');
     }
 
-
-    public function scopeStatus($query, $status = null)
+    public function scopeAtivos($query)
     {
-        if (!is_null($status)) {
-            if ($status == 1) {
-                $query->where('status',  1);
-            } else {
-                $query->where('status',  0);
-            }
-        }
+        $query->where('status',  1);
     }
 
-    public function scopeTecnico($query, $tecnico = null)
+    public function scopeSetoresAtivos($query)
     {
-        if (!is_null($tecnico)) {
-            if ($tecnico == 1) {
-                $query->where('tecnico',  1);
-            } else {
-                $query->where('tecnico',  0);
-            }
-        }
+
+        $query->whereRelation('setor', 'status', '=', 1);
+        
     }
 
-    public function scopeSetores($query, $setores = null)
+    public function scopeTecnico($query)
     {
-        if (!is_null($setores)) {
-            return $query->where('setores_id', $setores);
-        }
+        $query->where('tecnico',  1);
     }
+
+    // public function scopeTecnico($query, $tecnico = null)
+    // {
+    //     if (!is_null($tecnico)) {
+    //         if ($tecnico == 1) {
+    //             $query->where('tecnico',  1);
+    //         } else {
+    //             $query->where('tecnico',  0);
+    //         }
+    //     }
+    // }
+
+    // public function scopeSetores($query, $setores = null)
+    // {
+    //     if (!is_null($setores)) {
+    //         return $query->where('setores_id', $setores);
+    //     }
+    // }
 
 
 

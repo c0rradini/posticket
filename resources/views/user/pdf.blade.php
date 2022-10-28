@@ -18,14 +18,14 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>ID</th>
+            <th>Código</th>
             <th>Name</th>
             <th>E-mail</th>
             <th>Ramal</th>
             <th>Setor</th>
             <th>Tipo</th>
             <th>Status</th>
-            <th>Criada:</th>
+            <th>Data de Criação</th>
         </tr>
 
         @foreach($users as $user)

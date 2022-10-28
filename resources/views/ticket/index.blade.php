@@ -65,7 +65,7 @@
                 <table id="tabela" class="table table-striped display">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Código</th>
                             <th>Titulo</th>
                             @if (Auth::check() && Auth::user()->tecnico === 1)
                             <th>Requerente</th>
@@ -75,7 +75,6 @@
                             <th>Tec. Responsável</th>
                             <th>Status</th>
                             <th>Data de Abertura</th>
-
                             <th class="text-end">Ações</th>
                         </tr>
                     </thead>
@@ -168,30 +167,5 @@
         </div>
     </div>
 </div>
-</div>
-
-
 
 @endsection
-
-@push('scripts')
-<script>
-    $(document).ready(function() {
-        $('#tabela').DataTable({
-            "responsive": true,
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json"
-            }
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-            $("#fadeOut").fadeOut().transition - duration('1000');
-        }, 2000);
-    }, true);
-</script>
-
-@endpush

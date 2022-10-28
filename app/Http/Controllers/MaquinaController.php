@@ -153,7 +153,7 @@ class MaquinaController extends Controller
         }
 
         $data = [
-            'title' => 'Relatório de Mássssssquinas',
+            'title' => 'Relatório de Equipamentos',
             'date' => date('d/m/Y H:i'),
             'maquinas' => $maquinas,
         ];

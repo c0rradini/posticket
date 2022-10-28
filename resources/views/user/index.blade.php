@@ -80,7 +80,7 @@
                 <table id="tabela" class="table table-striped display">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Código</th>
                             <th>Nome</th>
                             <th>E-mail</th>
                             <th>Ramal</th>
@@ -104,7 +104,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-start">
-                                        <span>ID: {{ $user->id }}</span></br>
+                                        <span>Código: {{ $user->id }}</span></br>
                                         <span>Nome: {{ $user->name }}</span>
                                         </br>
                                         <small>Por motivos de segurança, esses dados serão desativados.</small>
@@ -129,7 +129,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-start">
-                                        <span>ID: {{ $user->id }}</span></br>
+                                        <span>Código: {{ $user->id }}</span></br>
                                         <span>Nome: {{ $user->name }}</span>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-center">
@@ -199,7 +199,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body text-start">
-                                                <span>ID: {{ $user->id }}</span></br>
+                                                <span>Código: {{ $user->id }}</span></br>
                                                 <span>Nome: {{ $user->name }}</span>
                                             </div>
                                             <div class="modal-footer d-flex justify-content-center">

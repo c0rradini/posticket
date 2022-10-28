@@ -31,8 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/setor/delete/{id}', [SetorController::class, 'destroy'])->name('destroy.setor')->middleware('isTec');
     Route::put('/setor/desativa/{id}', [SetorController::class, 'disable'])->name('desativa.setor')->middleware('isTec');
     Route::put('/setor/ativa/{id}', [SetorController::class, 'active'])->name('ativa.setor')->middleware('isTec');
-    Route::get('/setor/relatorio', [SetorController::class, 'report'])->name('report.setor');
-    Route::get('/setor/gerarPDF', [SetorController::class, 'gerarPDF'])->name('gerarPDF.setor');
+    Route::get('/setor/relatorio', [SetorController::class, 'report'])->name('report.setor')->middleware('isTec');
+    Route::get('/setor/gerarPDF', [SetorController::class, 'gerarPDF'])->name('gerarPDF.setor')->middleware('isTec');
 
     Route::get('/usuario/cadastrar', [UserController::class, 'create'])->name('cadastrar.user')->middleware('isTec');
     Route::post('/usuario/cadastrar', [UserController::class, 'store'])->name('register_user')->middleware('isTec');
@@ -57,8 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/maquina/delete/{id}', [MaquinaController::class, 'destroy'])->name('destroy.maquina')->middleware('isTec');
     Route::put('/maquina/desativa/{id}', [MaquinaController::class, 'disable'])->name('desativa.maquina')->middleware('isTec');
     Route::put('/maquina/ativa/{id}', [MaquinaController::class, 'active'])->name('ativa.maquina')->middleware('isTec');
-    Route::get('/maquina/relatorio', [MaquinaController::class, 'report'])->name('report.maquina');
-    Route::get('/maquina/gerarPDF', [MaquinaController::class, 'gerarPDF'])->name('gerarPDF.maquina');
+    Route::get('/maquina/relatorio', [MaquinaController::class, 'report'])->name('report.maquina')->middleware('isTec');
+    Route::get('/maquina/gerarPDF', [MaquinaController::class, 'gerarPDF'])->name('gerarPDF.maquina')->middleware('isTec');
 
     Route::get('/home', [TicketController::class, 'index'])->name('ticket.index');
 
@@ -70,14 +70,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/ticket/visualizar/{id}', [TicketController::class, 'show'])->name('ticket.visualizar-user');
     Route::get('/ticket/visualizar/{id}', [TicketController::class, 'show'])->name('ticket.visualizar');
     Route::put('/ticket/update/{id}', [TicketController::class, 'update'])->name('atualiza.ticket');
-    Route::get('/ticket/delete/{id}', [TicketController::class, 'delete']);
-    Route::delete('/ticket/delete/{id}', [TicketController::class, 'destroy'])->name('destroy.ticket');
-    Route::get('/ticket/assumir/{id}', [TicketController::class, 'assumirTicket'])->name('ticket.assumir-ticket');
+    Route::get('/ticket/delete/{id}', [TicketController::class, 'delete'])->middleware('isTec');
+    Route::delete('/ticket/delete/{id}', [TicketController::class, 'destroy'])->name('destroy.ticket')->middleware('isTec');
+    Route::get('/ticket/assumir/{id}', [TicketController::class, 'assumirTicket'])->name('ticket.assumir-ticket')->middleware('isTec');
     Route::put('/ticket/encerrar/{id}', [TicketController::class, 'encerrarTicket'])->name('ticket.encerrar-ticket');
-    Route::get('/ticket/relatorio', [TicketController::class, 'report'])->name('report.ticket');
-    Route::get('/ticket/gerarPDF', [TicketController::class, 'gerarPDF'])->name('gerarPDF.ticket');
+    Route::get('/ticket/relatorio', [TicketController::class, 'report'])->name('report.ticket')->middleware('isTec');
+    Route::get('/ticket/gerarPDF', [TicketController::class, 'gerarPDF'])->name('gerarPDF.ticket')->middleware('isTec');
 
 
-    Route::get('/relatorios', [PDFController::class, 'index'])->name('relatorio.index');
-    Route::get('gerarPDF', [PDFController::class, 'gerarPDF'])->name('gerarPDF');
+    Route::get('/relatorios', [PDFController::class, 'index'])->name('relatorio.index')->middleware('isTec');
+    Route::get('gerarPDF', [PDFController::class, 'gerarPDF'])->name('gerarPDF')->middleware('isTec');
 });

@@ -8,7 +8,7 @@
 
     <div class="row">
         <div class="col-md-12" style="margin-top: 10px;">
-            <p style="font-size: 32px;font-weight: bold;">Relatórios de Máquinas</p>
+            <p style="font-size: 32px;font-weight: bold;">Relatórios de Equipamentos</p>
         </div>
     </div>
 
@@ -16,7 +16,7 @@
 
     <div class="row align-items-center ">
         <div class="col d-flex align-items-end" style="margin-bottom: 0px;">
-            <h4 style="margin-bottom: 0px; height:100%; text-align:end;">Máquinas</h4>
+            <h4 style="margin-bottom: 0px; height:100%; text-align:end;">Equipamentos</h4>
         </div>
 
         <div class="col d-flex">

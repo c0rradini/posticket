@@ -31,7 +31,7 @@
 
                 <select name="setores_id" class="form-control bg-light border rounded shadow-sm p-2 mb-4" value="{{old('setor_id', $user->setor_id)}}" required="ON">
                     <option value="">Selecione o Setor...</option>
-                    @foreach(App\Models\Setor::all() as $setor)
+                    @foreach(\App\Models\Setor::ativo()->get() as $setor)
                     <option value="{{ $setor->id }}" class="text-start">{{$setor->name}}</option>
                     @endforeach
                 </select>

@@ -211,16 +211,41 @@ class TicketController extends Controller
     public function gerarPDF(Request $request)
     {
 
-        $ticket = Ticket::select('*')->status($request->status)->maquinas($request->maquinas)->setores($request->setores)->requerente($request->requerente)->responsaveis($request->responsaveis)->get();
+
+        $tickets = Ticket::with(['setor']);
+        
+        if($request->filled('status')){
+            $tickets->where('status', $request->status);
+        }
+
+        if($request->filled('maquinas')){
+            $tickets->where('maquina_id', $request->maquinas);
+        }
+
+        if($request->filled('setores')){
+            $tickets->where('setor_id', $request->setores);
+        }
+
+        if($request->filled('requerente')){
+            $tickets->where('requerente_user_id', $request->requerente);
+        }
+
+        if($request->filled('representante')){
+            $tickets->where('representante_user_id', $request->representante);
+        }
+
+        $tickets = $tickets->get();
+
+        // $ticket = Ticket::select('*')->status($request->status)->maquinas($request->maquinas)->setores($request->setores)->requerente($request->requerente)->responsaveis($request->responsaveis)->get();
 
         $data = [
             'title' => 'Relatório de Tickets',
             'date' => date('H:i d/m/Y'),
-            'tickets' => $ticket,
+            'tickets' => $tickets,
         ];
 
         $pdf = PDF::loadView('ticket/PDF', $data)->setPaper('A4', 'landscape');;
 
-        return $pdf->download('reportTickets.pdf', compact('ticket'));
+        return $pdf->download('reportTickets.pdf', compact('tickets'));
     }
 }

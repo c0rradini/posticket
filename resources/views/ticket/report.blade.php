@@ -29,7 +29,7 @@
                     <option value="4">Encerrado</option>
                 </select>
 
-                <p class="d-flex align-items-center " style="margin-bottom:0px;margin-left:15px;">Máquina: </p>
+                <p class="d-flex align-items-center " style="margin-bottom:0px;margin-left:15px;">Equipamento: </p>
                 <select id="maquinas" name="maquinas" class="m-2 form-control bg-light border rounded shadow-sm p-2">
                     <option value="">Todos</option>
                     @foreach(App\Models\Maquina::all() as $maquina)
@@ -62,7 +62,7 @@
             <p class="d-flex align-items-center " style="margin-bottom:0px;margin-left:15px;">Responsável: </p>
             <select id="responsavel" name="responsavel" class="m-2 form-control bg-light border rounded shadow-sm p-2">
                 <option value="">Todos</option>
-                @foreach(App\Models\User::all() as $user)
+                @foreach(App\Models\User::tecnico() as $user)
                 <option value="{{ $user->id }}" class="text-start">{{ $user->name }} [ {{ $user->email }} ] </option>
                 @endforeach
             </select>

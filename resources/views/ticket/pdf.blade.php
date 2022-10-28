@@ -18,11 +18,11 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>ID</th>
+            <th>Código</th>
             <th>Requerente</th>
             <th>Setor</th>
             <th>Máquina</th>
-            <th>Aberto</th>
+            <th>Data de Abertura</th>
             <th>Ramal</th>
             <th>Status</th>
             <th>Responsavel</th>

@@ -1,20 +1,20 @@
 @extends('layouts.master')
 
-@section('title', 'Maquinas')
+@section('title', 'Equipamentos')
 
 @section('page')
 <div class="container" style="margin-top: 15px;margin-bottom: 10px;">
 
     <div class="row">
         <div class="mb-2col-md-12" style="margin-top: 10px;">
-            <p style="font-size: 32px;font-weight: bold;">Lista de Maquinas</p>
+            <p style="font-size: 32px;font-weight: bold;">Lista de Equipamentos</p>
         </div>
     </div>
 
     @if(Auth::check() && Auth::user()->tecnico == 1)
     <div class="row">
         <div class="col">
-            <a class="btn btn-primary" role="button" href="{{ route('cadastrar.maquina') }}">&nbsp;&nbsp;&nbsp;Cadastrar Nova Máquina&nbsp;&nbsp;&nbsp;</a>
+            <a class="btn btn-primary" role="button" href="{{ route('cadastrar.maquina') }}">&nbsp;&nbsp;&nbsp;Cadastrar Novo Equipamento&nbsp;&nbsp;&nbsp;</a>
         </div>
     </div>
     @endif
@@ -65,7 +65,7 @@
                 <table id="tabela" class="table table-striped display">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Código</th>
                             <th>Nome</th>
                             <th>Status</th>
                             @if(Auth::check() && Auth::user()->tecnico === 1)

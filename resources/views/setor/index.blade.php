@@ -61,7 +61,7 @@
                 <table id="tabela" class="table table-striped display">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Código</th>
                             <th>Nome</th>
                             <th>Status</th>
                             @if(Auth::check() && Auth::user()->tecnico === 1)
@@ -81,7 +81,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-start">
-                                        <span>ID: {{ $setor->id }}</span></br>
+                                        <span>Código: {{ $setor->id }}</span></br>
                                         <span>Nome: {{ $setor->name }}</span>
                                         </br>
                                         <small>Por motivos de segurança, esses dados serão desativados.</small>
@@ -106,7 +106,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-start">
-                                        <span>ID: {{ $setor->id }}</span></br>
+                                        <span>Código: {{ $setor->id }}</span></br>
                                         <span>Nome: {{ $setor->name }}</span>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-center">

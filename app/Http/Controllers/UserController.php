@@ -184,53 +184,28 @@ class UserController extends Controller
     }
 
     public function gerarPDF(Request $request)
-    { 
-        // if ($request->status == "*" && $request->tecnico == "*" && $request->setores == "*")
-        //  {
+    {
+
+        $users = User::with(['setor']);
         
-        //     $users = User::all();
+        if($request->filled('status')){
+            $users->where('status', $request->status);
+        }
 
-        // } else {
+        if($request->filled('tecnico')){
+            $users->where('tecnico', $request->tecnico);
+        }
 
-            $users = User::select('*')->status($request->status)->tecnico($request->tecnico)->setores($request->setores)->get();
+        if($request->filled('setores')){
+            $users->where('setores_id', $request->setores);
+        }
 
-            
-        // $users = User::where('status', $request->status)->where('tecnico', $request->tecnico)->where('setores_id', $request->setores)->get();
+        $users = $users->get();
 
-        // }
-
-        // if ($request->status == "all" && $request->tecnico == "all" && $request->setores == "all") {
-
-        //     $users = User::all();
-
-        // } elseif ($request->status != "all" && $request->tecnico == "all" && $request->setores == "all") {
-
-        //     $users = User::where('status', $request->status)->get();
-
-        // } elseif ($request->status != "all" && $request->tecnico != "all" && $request->setores == "all") {
-
-        //     $users = User::where('status', $request->status)->where('tecnico', $request->tecnico)->get();
-            
-        // } else {
-
-        //     $users = User::where('status', $request->status, 'tecnico', $request->tecnico, 'setores', $request->setores)->get();
-        // } 
-
-
-        // if ($request->status == "all") {
-        //     $listar = "all";
-        //     $users = User::all();
-        // } elseif ($request->status == null) {
-        //     $listar = "1";
-        //     $users = User::where('status', '1')->get();
-        // } else {
-        //     $listar = $request->status;
-        //     $users = User::where('status', $request->status)->get();
-        // }
-
+        // $users = User::select('*')->status($request->status)->tecnico($request->tecnico)->setores($request->setores)->get();
 
         $data = [
-            'title' => 'Relatório de Usuário',
+            'title' => 'Relatório de Usuários',
             'date' => date('H:i d/m/Y'),
             'users' => $users,
         ];
