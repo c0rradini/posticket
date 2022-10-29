@@ -29,15 +29,18 @@ Entre no localhost/phpmyadmin e crie uma tabela com o nome ‘posticket’.
 Copie o arquivo .env.exemple e o renomeie para .env
 
 Após a conclusão dos passos anterior, entre no terminal e execute as seguintes linhas de comando:
-
+```
 composer install 
-
+```
+```
 php artisan key:generate
-
+```
+```
 php artisan migrate:fresh --seed
-
+```
+```
 php artisan serve
-
+```
 Finalizado, o projeto está rodando em sua máquina na URL: localhost/8000
 
 
