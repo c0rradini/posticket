@@ -1,4 +1,4 @@
-<p align="center"><a><img src="public/img/icon.png" width="250"></a></p>
+<p align="center"><a><img src="public/img/icon.png" width="200"></a></p>
 
 
 ## Sobre Posticket
